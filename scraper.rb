@@ -73,10 +73,10 @@ rows.each_with_index do |row, index|
   on_notice_to = columns[3].text.strip
   document_description = columns[4].css('a').first['href'] rescue nil
   date_scraped = Date.today.to_s
-  council_reference = File.basename(pdf_link, "_Exhibited_Documents.pdf").gsub('-', '/') rescue nil
+  council_reference = File.basename(pdf_link, "_Exhibited_Documents.pdf") rescue nil
 
   # Log the extracted data
-  logger.info("Extracted Data: #{description}, #{address}, #{application_date}, #{on_notice_to}, #{document_description}")
+  logger.info("Extracted Data: #{council_reference}, #{description}, #{address}, #{application_date}, #{on_notice_to}, #{document_description}")
 
   # Step 6: Ensure the entry does not already exist before inserting
   existing_entry = db.execute("SELECT * FROM glamorgan WHERE council_reference = ?", [council_reference])
