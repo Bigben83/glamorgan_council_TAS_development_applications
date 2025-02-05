@@ -75,7 +75,7 @@ rows.each_with_index do |row, index|
   date_scraped = Date.today.to_s
 
   # Log the extracted data
-  logger.info("Extracted Data: #{name}, #{address}, #{application_date}, #{closing_date}, #{pdf_link}")
+  logger.info("Extracted Data: #{description}, #{address}, #{application_date}, #{on_notice_to}, #{document_description}")
 
   # Step 6: Ensure the entry does not already exist before inserting
   existing_entry = db.execute("SELECT * FROM glamorgan WHERE council_reference = ?", [council_reference])
