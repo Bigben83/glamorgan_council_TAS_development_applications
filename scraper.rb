@@ -79,7 +79,7 @@ rows.each_with_index do |row, index|
   council_reference = pdf_link.gsub(/[^0-9\/]+$/, '').gsub(' ', '/').gsub('-', '/') rescue nil
 
   # Log the extracted data
-  logger.info("Extracted Data: #{council_reference}, #{description}, #{address}, #{application_date}, #{on_notice_to}, #{document_description}")
+  # logger.info("Extracted Data: #{council_reference}, #{description}, #{address}, #{application_date}, #{on_notice_to}, #{document_description}")
 
   # Step 6: Ensure the entry does not already exist before inserting
   existing_entry = db.execute("SELECT * FROM glamorgan WHERE council_reference = ?", [council_reference])
@@ -88,9 +88,9 @@ rows.each_with_index do |row, index|
     # Insert the data into the database
     db.execute("INSERT INTO glamorgan (description, address, date_received, on_notice_to, council_reference, document_description, date_scraped) VALUES (?, ?, ?, ?, ?, ?, ?)",
              [description, address, application_date, on_notice_to, council_reference, document_description, date_scraped])
-    logger.info("Data for application #{council_reference} saved to database.")
+    # logger.info("Data for application #{council_reference} saved to database.")
   else
-    logger.info("Duplicate entry for application #{council_reference} found. Skipping insertion.")
+    # logger.info("Duplicate entry for application #{council_reference} found. Skipping insertion.")
   end
 end
 
