@@ -69,8 +69,8 @@ rows.each_with_index do |row, index|
   # Extract the text content of each column
   description = columns[0].text.strip
   address = columns[1].text.strip
-  application_date = columns[2].text.strip
-  on_notice_to = columns[3].text.strip
+  application_date = Date.strptime(columns[2].text.strip, '%d %B %Y').strftime('%Y-%m-%d') rescue nil
+  on_notice_to = Date.strptime(columns[3].text.strip, '%d %B %Y').strftime('%Y-%m-%d') rescue nil
   document_description = columns[4].css('a').first['href'] rescue nil
   date_scraped = Date.today.to_s
   document_description = columns[4].css('a').first['href'] rescue nil
