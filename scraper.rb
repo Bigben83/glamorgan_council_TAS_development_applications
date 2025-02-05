@@ -73,6 +73,7 @@ rows.each_with_index do |row, index|
   on_notice_to = columns[3].text.strip
   document_description = columns[4].css('a').first['href'] rescue nil
   date_scraped = Date.today.to_s
+  council_reference = File.basename(pdf_link, "_Exhibited_Documents.pdf").gsub('-', '/') rescue nil
 
   # Log the extracted data
   logger.info("Extracted Data: #{description}, #{address}, #{application_date}, #{on_notice_to}, #{document_description}")
@@ -82,8 +83,8 @@ rows.each_with_index do |row, index|
 
   if existing_entry.empty? # Only insert if the entry doesn't already exist
     # Insert the data into the database
-    db.execute("INSERT INTO glamorgan (description, address, date_received, on_notice_to, document_description, date_scraped) VALUES (?, ?, ?, ?, ?, ?)",
-             [description, address, date_received, on_notice_to, document_description, date_scraped])
+    db.execute("INSERT INTO glamorgan (description, address, date_received, on_notice_to, council_reference, document_description, date_scraped) VALUES (?, ?, ?, ?, ?, ?, ?)",
+             [description, address, application_date, on_notice_to, council_reference, document_description, date_scraped])
     logger.info("Data for application #{council_reference} saved to database.")
   else
     logger.info("Duplicate entry for application #{council_reference} found. Skipping insertion.")
