@@ -76,7 +76,7 @@ rows.each_with_index do |row, index|
   document_description = columns[4].css('a').first['href'] rescue nil
   # Extract the council reference from the link text and replace "-" with "/"
   pdf_link = columns[4].css('a').first.text.strip rescue nil
-  council_reference = pdf_link.gsub('_Exhibited_Documents', '').gsub('-', '/') rescue nil
+  council_reference = pdf_link.gsub(/[^0-9\/]+$/, '').gsub(' ', '/').gsub('-', '/') rescue nil
 
   # Log the extracted data
   logger.info("Extracted Data: #{council_reference}, #{description}, #{address}, #{application_date}, #{on_notice_to}, #{document_description}")
